@@ -11,8 +11,9 @@
 		5D0E36AF2E8C95EA00401156 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 5D0E36AE2E8C95EA00401156 /* RxCocoa */; };
 		5D0E36B12E8C95EA00401156 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = 5D0E36B02E8C95EA00401156 /* RxRelay */; };
 		5D0E36B32E8C95EA00401156 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 5D0E36B22E8C95EA00401156 /* RxSwift */; };
-		5D0E36B52E8C95EA00401156 /* RxTest in Frameworks */ = {isa = PBXBuildFile; productRef = 5D0E36B42E8C95EA00401156 /* RxTest */; };
-		5D0E36B82E8C96CB00401156 /* SwiftLintFramework in Frameworks */ = {isa = PBXBuildFile; productRef = 5D0E36B72E8C96CB00401156 /* SwiftLintFramework */; };
+		5D562AAD2EAAE7F50083E15F /* Differentiator in Frameworks */ = {isa = PBXBuildFile; productRef = 5D562AAC2EAAE7F50083E15F /* Differentiator */; };
+		5D562AAF2EAAE7F50083E15F /* RxDataSources in Frameworks */ = {isa = PBXBuildFile; productRef = 5D562AAE2EAAE7F50083E15F /* RxDataSources */; };
+		5D562ACD2EAB0B640083E15F /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 5D562ACC2EAB0B640083E15F /* Alamofire */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,10 +75,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5D0E36B52E8C95EA00401156 /* RxTest in Frameworks */,
 				5D0E36B12E8C95EA00401156 /* RxRelay in Frameworks */,
-				5D0E36B82E8C96CB00401156 /* SwiftLintFramework in Frameworks */,
+				5D562ACD2EAB0B640083E15F /* Alamofire in Frameworks */,
+				5D562AAD2EAAE7F50083E15F /* Differentiator in Frameworks */,
 				5D0E36AF2E8C95EA00401156 /* RxCocoa in Frameworks */,
+				5D562AAF2EAAE7F50083E15F /* RxDataSources in Frameworks */,
 				5D0E36B32E8C95EA00401156 /* RxSwift in Frameworks */,
 				5D0E36AD2E8C95EA00401156 /* RxBlocking in Frameworks */,
 			);
@@ -145,7 +147,9 @@
 				5D0E36B02E8C95EA00401156 /* RxRelay */,
 				5D0E36B22E8C95EA00401156 /* RxSwift */,
 				5D0E36B42E8C95EA00401156 /* RxTest */,
-				5D0E36B72E8C96CB00401156 /* SwiftLintFramework */,
+				5D562AAC2EAAE7F50083E15F /* Differentiator */,
+				5D562AAE2EAAE7F50083E15F /* RxDataSources */,
+				5D562ACC2EAB0B640083E15F /* Alamofire */,
 			);
 			productName = CityAirportSearch;
 			productReference = 5D0E36742E8C95B000401156 /* CityAirportSearch.app */;
@@ -231,7 +235,8 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				5D0E36AB2E8C95EA00401156 /* XCRemoteSwiftPackageReference "RxSwift" */,
-				5D0E36B62E8C96CB00401156 /* XCRemoteSwiftPackageReference "SwiftLint" */,
+				5D562AAB2EAAE7F50083E15F /* XCRemoteSwiftPackageReference "RxDataSources" */,
+				5D562ACB2EAB0B640083E15F /* XCRemoteSwiftPackageReference "Alamofire" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 5D0E36752E8C95B000401156 /* Products */;
@@ -316,7 +321,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 7FCTC6DRE7;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = CityAirportSearch/Info.plist;
+				INFOPLIST_FILE = CityAirportSearch/resources/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "IATA Tracker";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.travel";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -354,7 +359,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 7FCTC6DRE7;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = CityAirportSearch/Info.plist;
+				INFOPLIST_FILE = CityAirportSearch/resources/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "IATA Tracker";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.travel";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -638,12 +643,20 @@
 				minimumVersion = 6.9.0;
 			};
 		};
-		5D0E36B62E8C96CB00401156 /* XCRemoteSwiftPackageReference "SwiftLint" */ = {
+		5D562AAB2EAAE7F50083E15F /* XCRemoteSwiftPackageReference "RxDataSources" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/realm/SwiftLint.git";
+			repositoryURL = "https://github.com/RxSwiftCommunity/RxDataSources.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 0.61.0;
+				minimumVersion = 5.0.2;
+			};
+		};
+		5D562ACB2EAB0B640083E15F /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.10.2;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -674,10 +687,20 @@
 			package = 5D0E36AB2E8C95EA00401156 /* XCRemoteSwiftPackageReference "RxSwift" */;
 			productName = RxTest;
 		};
-		5D0E36B72E8C96CB00401156 /* SwiftLintFramework */ = {
+		5D562AAC2EAAE7F50083E15F /* Differentiator */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 5D0E36B62E8C96CB00401156 /* XCRemoteSwiftPackageReference "SwiftLint" */;
-			productName = SwiftLintFramework;
+			package = 5D562AAB2EAAE7F50083E15F /* XCRemoteSwiftPackageReference "RxDataSources" */;
+			productName = Differentiator;
+		};
+		5D562AAE2EAAE7F50083E15F /* RxDataSources */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5D562AAB2EAAE7F50083E15F /* XCRemoteSwiftPackageReference "RxDataSources" */;
+			productName = RxDataSources;
+		};
+		5D562ACC2EAB0B640083E15F /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5D562ACB2EAB0B640083E15F /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

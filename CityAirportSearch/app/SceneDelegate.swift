@@ -9,6 +9,8 @@ import UIKit
 
 final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
+    private var appCoordinator: Coordinator!
+    
     var window: UIWindow?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
@@ -16,6 +18,12 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             fatalError("No Window Scene allocated for this app")
         }
         
+        self.window = UIWindow(windowScene: windowScene)
+        
+        guard let window else { return }
+        
+        appCoordinator = AppCoordinator(window: window)
+        appCoordinator.start()
     }
 }
 
