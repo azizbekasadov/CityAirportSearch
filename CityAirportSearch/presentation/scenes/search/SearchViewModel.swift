@@ -12,7 +12,8 @@ internal import Differentiator
 
 protocol SearchViewPresentable: AnyObject {
     typealias Input = (
-        searchText: Driver<String>, ()
+        searchText: Driver<String>,
+        citySelected: Driver<CityViewPresentable>
     )
     typealias Output = (
         cities: Driver<[CityItemsSection]>, ()
@@ -22,6 +23,8 @@ protocol SearchViewPresentable: AnyObject {
     
     var input: SearchViewPresentable.Input { get }
     var output: SearchViewPresentable.Output { get }
+    
+    func onAppear()
 }
 
 final class SearchViewModel: SearchViewPresentable {
@@ -34,6 +37,13 @@ final class SearchViewModel: SearchViewPresentable {
     
     var input: SearchViewPresentable.Input
     var output: SearchViewPresentable.Output
+    
+    private typealias RoutingAction = (citySelected: PublishRelay<Set<Airport>>, ())
+    typealias Routing = (citySelected: Driver<Set<Airport>>, ())
+    
+    private let routingAction: RoutingAction = (citySelected: PublishRelay(), ())
+    
+    lazy var router: Routing = (citySelected: self.routingAction.citySelected.asDriver(onErrorDriveWith: .empty()), ())
     
     init(
         input: SearchViewPresentable.Input,
@@ -52,6 +62,7 @@ final class SearchViewModel: SearchViewPresentable {
         isLoading = true
         self.process()
     }
+    
 }
 
 private extension SearchViewModel {
@@ -61,7 +72,7 @@ private extension SearchViewModel {
     ) -> SearchViewPresentable.Output {
         
         let searchTextPublisher = input.searchText
-            .debounce(.milliseconds(300))
+            .debounce(.milliseconds(500))
             .distinctUntilChanged()
             .skip(1) // skip the first val
             .asObservable()
@@ -112,6 +123,20 @@ private extension SearchViewModel {
                 self?.isLoading = false
             }
             .subscribe()
+            .disposed(by: disposeBag)
+        
+        input.citySelected
+            .map { $0.city }
+            .withLatestFrom(state.airports.asDriver()) {
+                (city: $0, airports: $1)
+            }
+            .map { city, airports in
+                airports.filter { $0.city == city }
+            }
+            .map { [routingAction] in
+                routingAction.citySelected.accept($0)
+            }
+            .drive()
             .disposed(by: disposeBag)
     }
 }

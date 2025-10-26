@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 import RxDataSources
 
-final class SearchViewController: UITableViewController {
+final class SearchViewController: UIViewController {
     
     private var viewModel: SearchViewPresentable!
     
@@ -19,6 +19,23 @@ final class SearchViewController: UITableViewController {
         cityCell.configure(using: item)
         return cityCell
     })
+    
+    private lazy var tableView: UITableView = {
+        let tableView = UITableView(frame: .zero, style: .plain)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.estimatedRowHeight = UITableView.automaticDimension
+        tableView.rowHeight = 56.0
+        return tableView
+    }()
+    
+    private lazy var searchBar: UISearchBar = {
+        let searchBar = UISearchBar()
+        searchBar.translatesAutoresizingMaskIntoConstraints = false
+        searchBar.placeholder = "Search"
+        searchBar.searchBarStyle = .minimal
+        searchBar.backgroundColor = UIColor.clear
+        return searchBar
+    }()
     
     private var disposeBag: DisposeBag = .init()
     
@@ -29,22 +46,43 @@ final class SearchViewController: UITableViewController {
         
         // Do not change the order of the funcs()
         setupNavigationBar()
+        setupViews()
         setupViewModel()
+        setupBindings()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        viewModel.onAppear()
+    }
+    
+    private func setupViews() {
+        view.backgroundColor = UIColor.systemBackground
+        view.addSubview(tableView)
+        view.addSubview(searchBar)
+        
+        NSLayoutConstraint.activate([
+            searchBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
+            searchBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            searchBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            tableView.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 16),
+            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+        ])
     }
     
     private func setupViewModel() {
-        guard let searchBar = navigationItem.searchController?.searchBar else {
-            fatalError("A SearchBar field must be set to be used")
-        }
-        
         viewModel = viewModelBuilder(
-            (searchText: searchBar.rx.text.orEmpty.asDriver(), ())
+            (
+                searchText: searchBar.rx.text.orEmpty.asDriver(),
+                citySelected: tableView.rx.modelSelected(CityViewPresentable.self).asDriver()
+            )
         )
     }
     
     private func setupNavigationBar() {
-        navigationItem.searchController = UISearchController(searchResultsController: UITableViewController(style: .plain))
-        
         if #available(iOS 26, *) {
             navigationItem.largeTitle = "Airports"
         }
